@@ -6,5 +6,5 @@ from helpers.toggl_retriever import toggl_retriever
 from helpers.github_retriever import github_retriever
 from keys import toggl_setup, github_setup
 
-toggl_retriever(toggl_setup)
+# toggl_retriever(toggl_setup)
 github_retriever(github_setup)
