@@ -18,18 +18,21 @@ def toggl_retriever(toggl_setup):
 
     tags = requests.get(f'https://api.track.toggl.com/api/v9/workspaces/{toggl_setup["workspace_id"]}/tags',
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
-    print('Tags:')
-    pprint(tags.json())
+    # print('Tags:')
+    # pprint(tags.json())
+    tags = tags.json()
 
     clients = requests.get(f'https://api.track.toggl.com/api/v9/workspaces/{toggl_setup["workspace_id"]}/clients',
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
-    print('Clients:')
-    pprint(clients.json())
+    # print('Clients:')
+    # pprint(clients.json())
+    clients = clients.json()
 
     projects = requests.get(f'https://api.track.toggl.com/api/v9/workspaces/{toggl_setup["workspace_id"]}/projects',
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
-    print('Projects:')
-    pprint(projects.json())
+    # print('Projects:')
+    # pprint(projects.json())
+    projects = projects.json()
 
     # time_entries = requests.post(f'https://api.track.toggl.com/reports/api/v3/workspace/{toggl_setup["workspace_id"]}/search/time_entries',
     #         json={"end_date":"2022-10-26","previous_period_start":"2022-10-20","start_date":"2022-10-23"},
@@ -38,8 +41,11 @@ def toggl_retriever(toggl_setup):
     # pprint(time_entries.json())
 
     time_entries_alternate = requests.get('https://api.track.toggl.com/api/v9/me/time_entries',
-            params={"since":since_unix},
+            # params={"since":since_unix},
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
 
-    print('Time entries alternate:')
-    pprint(time_entries_alternate.json())
+    # print('Time entries alternate:')
+    # pprint(time_entries_alternate.json())
+    time_entries = time_entries_alternate.json()
+
+    return tags, clients, projects, time_entries
