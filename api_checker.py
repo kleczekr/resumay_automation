@@ -40,9 +40,6 @@ collection_toggl_tags = db['toggl_tags']
 collection_toggl_clients = db['toggl_clients']
 collection_toggl_projects = db['toggl_projects']
 
-with open('github.txt', 'w') as f:
-    for item in github_list:
-        f.write("%s\n" % item)
 
 collection_github.insert_many(github_list)
 collection_toggl_time.insert_many(toggl_time_entries)

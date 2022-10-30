@@ -1,5 +1,7 @@
 import requests
 from pprint import pprint
+# from datetime import datetime
+from pandas import to_datetime
 
 def get_one_commit(github_setup, url):
     headers = {'Accept': 'application/vnd.github.cloak-preview'}
@@ -28,7 +30,8 @@ def github_retriever(github_setup, page):
     for item in req.json()['items']:
         committer = item['committer']['login']
         if committer == 'kleczekr':
-            date = item['commit']['author']['date']
+            # date = datetime.strptime(item['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ')
+            date = to_datetime(item['commit']['author']['date'])
             message = item['commit']['message']
             repo_name = item['repository']['name']
             repo_url = item['repository']['html_url']
