@@ -8,6 +8,7 @@ pandas = "*"
 requests = "*"
 pymongo = "*"
 pynvim = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
