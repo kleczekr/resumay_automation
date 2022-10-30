@@ -21,23 +21,19 @@ def toggl_retriever(toggl_setup):
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
     tags = tags.json()
     for tag in tags:
-        # tag['at'] = datetime.datetime.strptime(tag['at'], '%Y-%m-%dT%H:%M:%S.%fZ')
         tag['at'] = to_datetime(tag['at'])
 
     clients = requests.get(f'https://api.track.toggl.com/api/v9/workspaces/{toggl_setup["workspace_id"]}/clients',
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
     clients = clients.json()
     for client in clients:
-        # client['at'] = datetime.datetime.strptime(client['at'], '%Y-%m-%dT%H:%M:%S+00:00')
         client['at'] = to_datetime(client['at'])
 
     projects = requests.get(f'https://api.track.toggl.com/api/v9/workspaces/{toggl_setup["workspace_id"]}/projects',
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
     projects = projects.json()
     for project in projects:
-        # project['at'] = datetime.datetime.strptime(project['at'], '%Y-%m-%dT%H:%M:%S+00:00')
         project['at'] = to_datetime(project['at'])
-        # project['created_at'] = datetime.datetime.strptime(project['created_at'], '%Y-%m-%dT%H:%M:%S+00:00')
         project['created_at'] = to_datetime(project['created_at'])
 
     time_entries = requests.get('https://api.track.toggl.com/api/v9/me/time_entries',
@@ -45,10 +41,7 @@ def toggl_retriever(toggl_setup):
             headers={'content-type': 'application/json', 'Authorization' : f'Basic {utf8token}'})
     time_entries = time_entries.json()
     for entry in time_entries:
-        # entry['start'] = datetime.datetime.strptime(entry['start'], '%Y-%m-%dT%H:%M:%S+00:00')
         entry['start'] = to_datetime(entry['start'])
-        # entry['stop'] = datetime.datetime.strptime(entry['stop'], '%Y-%m-%dT%H:%M:%S+00:00')
         entry['stop'] = to_datetime(entry['stop'])
-        # entry['at'] = datetime.datetime.strptime(entry['at'], '%Y-%m-%dT%H:%M:%S+00:00')
         entry['at'] = to_datetime(entry['at'])
     return tags, clients, projects, time_entries

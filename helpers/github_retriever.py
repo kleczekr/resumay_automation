@@ -30,7 +30,6 @@ def github_retriever(github_setup, page):
     for item in req.json()['items']:
         committer = item['committer']['login']
         if committer == 'kleczekr':
-            # date = datetime.strptime(item['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ')
             date = to_datetime(item['commit']['author']['date'])
             message = item['commit']['message']
             repo_name = item['repository']['name']

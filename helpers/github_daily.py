@@ -1,18 +1,19 @@
 import requests
-from datetime import datetime
+# from datetime import datetime
+from pandas import to_datetime
 
-from github_retriever import get_one_commit
+from helpers.github_retriever import get_one_commit
 
 def github_daily(github_setup, date):
     url = f'https://api.github.com/search/commits?q=author:kleczekr&order=desc&sort=committer-date&per_page=100'
     headers = {'Accept': 'application/vnd.github.cloak-preview'}
     auth = ('kleczekr', github_setup['OTP'])
     req = requests.get(url, headers=headers, auth=auth)
-    date = datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
+    date = to_datetime(date)
     commit_bucket = []
     for commit in req.json()['items']:
         committer = commit['committer']['login']
-        commit_date = datetime.strptime(commit['commit']['author']['date'], '%Y-%m-%dT%H:%M:%SZ')
+        commit_date = to_datetime(commit['commit']['author']['date'])
         if committer == 'kleczekr' and commit_date > date:
             message = commit['commit']['message']
             repo_name = commit['repository']['name']
