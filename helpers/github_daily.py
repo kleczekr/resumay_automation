@@ -9,11 +9,11 @@ def github_daily(github_setup, date):
     headers = {'Accept': 'application/vnd.github.cloak-preview'}
     auth = ('kleczekr', github_setup['OTP'])
     req = requests.get(url, headers=headers, auth=auth)
-    date = to_datetime(date)
+    date = to_datetime(date).tz_localize(None)
     commit_bucket = []
     for commit in req.json()['items']:
         committer = commit['committer']['login']
-        commit_date = to_datetime(commit['commit']['author']['date'])
+        commit_date = to_datetime(commit['commit']['author']['date']).tz_localize(None)
         if committer == 'kleczekr' and commit_date > date:
             message = commit['commit']['message']
             repo_name = commit['repository']['name']
