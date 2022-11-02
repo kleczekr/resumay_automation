@@ -51,10 +51,19 @@ def toggl_daily(toggl_setup, tag_date, client_date, project_date, entry_date):
     raw_time_entries = raw_time_entries.json()
     time_entries = []
     for entry in raw_time_entries:
-        entry['start'] = to_datetime(entry['start']).tz_localize(None)
-        entry['stop'] = to_datetime(entry['stop']).tz_localize(None)
-        entry['at'] = to_datetime(entry['at']).tz_localize(None)
-        if entry['at'] > entry_date:
+        try:
+            entry['start'] = to_datetime(entry['start']).tz_localize(None)
+        except:
+            entry['start'] = to_datetime(entry['start'])
+        try:
+            entry['stop'] = to_datetime(entry['stop']).tz_localize(None)
+        except:
+            entry['stop'] = to_datetime(entry['stop'])
+        try:
+            entry['at'] = to_datetime(entry['at']).tz_localize(None)
+        except:
+            entry['at'] = to_datetime(entry['at'])
+        if entry['at'] > entry_date or entry['stop'] > entry_date:
             time_entries.append(entry)
 
     return tags, clients, projects, time_entries

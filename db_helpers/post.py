@@ -27,6 +27,9 @@ rows = cursor.fetchall()
 for row in rows:
     print(row[0])
 
+cursor.execute('DROP TABLE IF EXISTS github;')
+cursor.execute('DROP TABLE IF EXISTS github_filewise;')
+
 cursor.execute(
     """CREATE TABLE IF NOT EXISTS github (
         id SERIAL PRIMARY KEY,
@@ -76,4 +79,6 @@ for commit in all_commits:
             (github_id, file['filename'], file['extension'], file['additions'], file['deletions'], file['total']))
     print('Inserted commit: ' + commit['message'])
 
+conn.commit()
+conn.close()
 cursor.close()
